@@ -1,7 +1,7 @@
 {
   "name": "daily-cash-pro",
   "version": "1.0.0",
-  "description": "تطبيق إدارة الصندوق اليومي والمصروفات",
+  "description": "تطبيق إدارة الصندوق اليومي",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -10,6 +10,9 @@
   "build": {
     "appId": "com.restaurant.dailycash",
     "productName": "الصندوق اليومي",
+    "directories": {
+      "output": "dist"
+    },
     "win": {
       "target": "nsis"
     },
@@ -20,9 +23,9 @@
     }
   },
   "author": "Majd",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
-    "electron": "^28.2.0",
-    "electron-builder": "^24.9.1"
+    "electron": "28.2.0",
+    "electron-builder": "24.9.1"
   }
 }
