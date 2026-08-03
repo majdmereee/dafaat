@@ -3,20 +3,18 @@ name: Build Windows App
 on:
   push:
     branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
-  workflow_dispatch: # يتيح لك تشغيل البناء يدوياً من واجهة غيت هاب
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: windows-latest # تحديد سيرفر ويندوز لتخريج ملف exe
+    runs-on: windows-latest
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
 
@@ -26,10 +24,10 @@ jobs:
       - name: Build Electron App
         run: npm run build
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # تصريح البناء الخاص بغيت هاب
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload EXE Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Daily-Cash-App
-          path: dist/*.exe # سحب ملف الـ exe بعد انتهاء البناء
+          path: dist/*.exe
