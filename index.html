@@ -553,12 +553,14 @@
                 h += `<tr><td>${i+1}</td><td style="direction:ltr; text-align:right;">${fmtDate(e.date)}</td><td style="font-weight:700;">${e.name}</td><td style="font-weight:900; color:#4f46e5;">${fmt(e.amount)}</td></tr>`;
             });
 
+            // الثغرة تم إصلاحها هنا بالسطر الخاص بـ script 
             h += `<tr class="total-row"><td colspan="3" style="text-align: left;">إجمالي المصروفات:</td><td>${fmt(total)}</td></tr>
                     </tbody></table>
                 <div class="footer">تم إنشاء هذا التقرير تلقائياً عبر نظام الإدارة المالية برو</div>
             </div>
-            <script>window.onload = function() { window.print(); }</script>
+            <script>window.onload = function() { window.print(); }<\/script>
             </body></html>`;
+            
             this.download(title, h);
         },
         download: function(title, htmlContent) {
