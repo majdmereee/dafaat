@@ -1,9 +1,12 @@
-name: Build Windows App
+name: Build and Publish Windows App
 
 on:
   push:
     branches: [ main, master ]
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -21,7 +24,7 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Build Electron App
+      - name: Build and Publish Electron App
         run: npm run build
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
