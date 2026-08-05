@@ -1,18 +1,17 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
+const { autoUpdater } = require('electron-updater');
 
-// تحديد مسار قاعدة البيانات بأمان تام داخل مجلد النظام الخاص بالمستخدم
 const dbPath = path.join(app.getPath('userData'), 'daily_cash_db.json');
-
 let mainWindow;
 
 function createWindow() {
     mainWindow = new BrowserWindow({
         width: 1280,
         height: 800,
-        title: "الصندوق اليومي - مطعمي برو",
-        autoHideMenuBar: true, // إخفاء القوائم العلوية بأمان
+        title: "الإدارة المالية برو",
+        autoHideMenuBar: true,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false
@@ -22,7 +21,14 @@ function createWindow() {
     mainWindow.loadFile('index.html');
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+    createWindow();
+
+    // فحص التحديثات من مستودع majdmereee/dafaat في الخلفية
+    autoUpdater.checkForUpdatesAndNotify().catch(() => {
+        console.log("التطبيق يعمل في وضع الأوفلاين.");
+    });
+});
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
@@ -39,9 +45,7 @@ ipcMain.handle('get-db', () => {
             const data = fs.readFileSync(dbPath, 'utf8');
             return JSON.parse(data);
         }
-    } catch (error) {
-        console.error("خطأ في قراءة البيانات:", error);
-    }
+    } catch (error) {}
     return null; 
 });
 
@@ -49,8 +53,7 @@ ipcMain.handle('save-db', (event, data) => {
     try {
         fs.writeFileSync(dbPath, JSON.stringify(data, null, 2));
         return true;
-    } catch (error) {
-        console.error("خطأ في حفظ البيانات:", error);
-        return false;
+    } catch (error) { 
+        return false; 
     }
 });
