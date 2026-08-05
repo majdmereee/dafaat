@@ -1,29 +1,40 @@
 {
   "name": "daily-cash-pro",
   "version": "1.0.0",
-  "description": "تطبيق إدارة الصندوق اليومي",
+  "description": "نظام الإدارة المالية برو",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder --win"
+    "build": "electron-builder --win -p always"
   },
   "build": {
     "appId": "com.restaurant.dailycash",
-    "productName": "الصندوق اليومي",
+    "productName": "الإدارة المالية برو",
     "directories": {
       "output": "dist"
     },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "majdmereee",
+        "repo": "dafaat"
+      }
+    ],
     "win": {
       "target": "nsis"
     },
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
-      "createDesktopShortcut": true
+      "createDesktopShortcut": true,
+      "uninstallDisplayName": "الإدارة المالية برو"
     }
   },
   "author": "Majd",
   "license": "MIT",
+  "dependencies": {
+    "electron-updater": "^6.1.8"
+  },
   "devDependencies": {
     "electron": "28.2.0",
     "electron-builder": "24.9.1"
